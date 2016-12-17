@@ -29,6 +29,7 @@
 \hypersetup{colorlinks=TRUE,linkbordercolor=red,linkcolor=green,pdfborderstyle={/S/U/W 1}}
 \usepackage{amsmath} 
 \usepackage{textcomp}
+\usepackage{url}
 
 
 
@@ -60,22 +61,18 @@
 \JournalInfo{Data Mining B565 Fall 2016} % Journal information
 \Archive{} % Additional notes (e.g. copyright, DOI, review/research article)
 
-\PaperTitle{Advanced Regression Techniques : Housing Prices} % Article title
+\PaperTitle{House Prices: Advanced Regression Techniques} % Article title
 
-\Authors{Ankit Saxena\textsuperscript{1}*, Samvat Rastogi\textsuperscript{2},Shailendra Patil\textsuperscript{3}} % Authors
-\affiliation{\textsuperscript{1}\textit{Data Science Science, School of Informatics and Computing, Indiana University, Bloomington, IN, USA}} % Author affiliation
-\affiliation{\textsuperscript{2}\textit{ Data Science Science, School of Informatics and Computing, Indiana University, Bloomington, IN, USA}} % Author affiliation
-\affiliation{\textsuperscript{3}\textit{ Data Science Science, School of Informatics and Computing, Indiana University, Bloomington, IN, USA}} % Author affiliation
-\affiliation{*\textbf{Corresponding author}: samrasto@indiana.edu} % Corresponding author
+\Authors{Ankit Saxena, Samvat Rastogi, Shailendra Patil} % Authors
 
-\Keywords{Keyword1 --- Keyword2 --- Keyword3} % Keywords - if you don't want any simply remove all the text between the curly brackets
+\Keywords{Data Mining --- Kaggle ---  Housing --- Regression --- Prediction} % Keywords - if you don't want any simply remove all the text between the curly brackets
 \newcommand{\keywordname}{Keywords} % Defines the keywords heading name
 
 %----------------------------------------------------------------------------------------
 %	ABSTRACT
 %----------------------------------------------------------------------------------------
 
-\Abstract{This project deals with predicting the Sales Price of individual residential properties in Ames, Iowa. The data set consists of both 'Training Data' and Test Data'. The goal is to fit an appropriate regression model using the 'Training Data' and then  predict the Sale Price for the given 'Test Data' based on the model. The 'Training Data' consist of 1460 observation and 81 Attributes including the Sales Price and 'Test Data' contains 1459 observations with 80 attributes which does not include Sales Price. Before applying any model, the data is preprocessed to take care of missing values and also to reduce number of attributes being used and then various regression methods like 'Linear', 'Random Forest' 'Gradient Boosting' , 'Xtreme Gradient Boosting' is applied and compared, and the model with least error rate is then used to predict the Sales Price for 'Test Data'. }
+\Abstract{This project deals with predicting the Sales Price of individual residential properties in Ames, Iowa. The data set consists of 'Training Data' and 'Test Data'. The goal is to generate an appropriate regression model using the 'Training Data' and then predict the Sales Price for the given 'Test Data' based on the generated model. The 'Training Data' consists of 1460 observation and 81 Attributes including the Sales Price and 'Test Data' contains 1459 observations with 80 attributes which does not include Sales Price. Before applying any model, the data is preprocessed to take care of missing values and also to reduce number of attributes being used for model training. After data preprocessing, various regression methods like Linear Regression, Random Forest, Gradient Boosting, Extreme Gradient Boosting are applied and compared. Then, the model with the least error rate is used to predict the Sales Price of the houses using 'Test Data'.}
 
 %----------------------------------------------------------------------------------------
 
@@ -94,16 +91,14 @@
 %----------------------------------------------------------------------------------------
 
 \section*{Introduction} % The \section*{} command stops section numbering
-"The Housing Market refers to the supply and demand for houses, usually in a particular country or region. A key element of the housing market is the average house prices and trend in house prices"[1]. For many people buying a property is one of the important decisions in life. There are many factors, like Area, Neighbourhood, Connectivity, Transportation ,House Price etc that impacts this decision. 
-Hence it becomes very important to know the trend in which the houses are being sold, so that as a buyer we might have a rough idea what can be the expected Price of a house.  The need for predictive analysis is what is required here. As a analyst , we build various model and predict the rough estimate of the prices, which then is used by the property evaluators for their clients.
-
+"The Housing Market refers to the supply and demand for houses, usually in a particular country or region. A key element of the housing market is the average house prices and trend in house prices \cite{REF:1}. For many people buying a property is one of the important decisions in life. There are many factors like Area, Neighborhood, Connectivity, Transportation, House Price, etc. that impacts this decision.
+\\ Hence, it becomes very important to know the trend in which the houses are being sold, so that as a buyer we might have a rough idea what can be the expected price of a house. Predictive analysis is what is required here. As an analyst, we build various model and predict the rough estimate of the prices, which might be used by the property evaluators for their clients.
 
 \addcontentsline{toc}{section}{Introduction} % Adds this section to the table of contents
 
-
 %------------------------------------------------
 
-\section{Background}
+\section{Data}
 
 
 %\begin{equation}
@@ -111,9 +106,7 @@ Hence it becomes very important to know the trend in which the houses are being 
 %\label{eq:refname2}
 %\end{equation}
 
-
-
-\subsection{Data}
+\subsection{Data Background}
 The data that has been provided for analysis consists of 3 files
 \begin{enumerate}[noitemsep]
 \item \textbf{train.csv}
@@ -121,45 +114,43 @@ The data that has been provided for analysis consists of 3 files
 \item \textbf{data$\_$description.txt}
 \end{enumerate}
 
-Train and Test data files consists of a column named ID, which can be used to uniquely identify every house and 79 attributes that can be used to predict the Sale Price of the house. Train data file consists of an additional column named Sale Price. The Sale Price of the houses in the training data file can be used to build the model for prediction of the Sale Price of the Test data. The data$\_$description file provides all necessary information regarding the attributes.
-The data was downloaded from 
-\href{https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data}{\color{blue}kaggle}.
+Training and Test data files consists of a column named ID, which can be used to uniquely identify every house and there are 79 features that can be used to predict the Sales Price of the house. Training data file consists of an additional column named Sale Price. The regression models have been developed on the training data to predict the value of Sales Price of the Test data. The data$\_$description file provides all the necessary information regarding the attributes.
+The data was downloaded from Kaggle \cite{REF:8}.
 
 
 \subsection{Data Description}
-The training data has 79 attributes excluding the Sales Price and a total of 1460 values. The test data has 78 attributes and a total of 1459 values.
-Data consists of \textbf{43 categorical attributes} and \textbf{36 numerical variables}. 
-\\The \textbf{categorical variables} are: MSZoning, Street, Alley, LotShape, LandContour, Utilities, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, HouseStyle, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, ExterQual, ExterCond, Foundation, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, HeatingQC, CentralAir, Electrical, KitchenQual, Functional, FireplaceQu, GarageType, GarageFinish, GarageQual, GarageCond, PavedDrive, PoolQC, Fence, MiscFeature, SaleType
-SaleCondition
-\\The \textbf{numerical attributes} are: 
-MSSubClass, LotFrontage, LotArea, OverallQual, OverallCond, YearBuilt, YearRemodAdd, MasVnrArea, BsmtFinSF1, BsmtFinSF2, BsmtUnfSF, TotalBsmtSF, X1stFlrSF, X2ndFlrSF, LowQualFinSF, GrLivArea, BsmtFullBath, BsmtHalfBath, FullBath, HalfBath, BedroomAbvGr, KitchenAbvGr, TotRmsAbvGrd, Fireplaces, GarageYrBlt, GarageCars, GarageArea, WoodDeckSF, OpenPorchSF, EnclosedPorch, X3SsnPorch, ScreenPorch, PoolArea, MiscVal, MoSold, YrSold
-
-
+The training data has 78 attributes excluding the ID and Sales Price and a total of 1460 records. The test data has 78 attributes excluding the ID and a total of 1459 records.
+Data consists of \textbf{43 categorical features} and \textbf{36 numerical features}. 
+\\ \\ The \textbf{categorical features} are: MSZoning, Street, Alley, LotShape, LandContour, Utilities, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, HouseStyle, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, ExterQual, ExterCond, Foundation, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, HeatingQC, CentralAir, Electrical, KitchenQual, Functional, FireplaceQu, GarageType, GarageFinish, GarageQual, GarageCond, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition.
+\\ \\The \textbf{numerical features} are: MSSubClass, LotFrontage, Lot Area, OverallQual, OverallCond, YearBuilt, YearRemodAdd, MasVnrArea, BsmtFinSF1, BsmtFinSF2, BsmtUnfSF, TotalBsmtSF, X1stFlrSF, X2ndFlrSF, LowQualFinSF, GrLivArea, BsmtFullBath, BsmtHalfBath, FullBath, HalfBath, BedroomAbvGr, KitchenAbvGr, TotRmsAbvGrd, Fireplaces, GarageYrBlt, GarageCars, GarageArea, WoodDeckSF, OpenPorchSF, EnclosedPorch, X3SsnPorch, ScreenPorch, PoolArea, MiscVal, MoSold, YrSold.
 
 
 \subsection{Data Preprocessing}
-The biggest task in any Data Mining problem is 'Data Preprocessing' . Before we apply any algorithms , we first need to clean the data. The data might contain missing values, outlier etc. There will be different kinds of attribute like continuous variables, categorical variables and so on. Such variables need to be taken care of based on the model we want to apply.  Data Preprocessing not only deals with these thing but also feature selection, data reduction etc. Given a set of attribute , not every attribute is important for data analysis or prediction, few attributes might be of no use and few attributes will be very vital for our analysis, so for this purpose we do Feature extraction. 
+The biggest task in any Data Mining problem is Data Preprocessing. Before we apply any algorithms, we first need to clean the data. The data might contain missing values, outliers, etc. There could be different kinds of attributes in the given data, like continuous variables, categorical variables, nominal, ordinal, ranges, ratios, etc. Such variables need to be taken care of based on the model we want to apply. Data preprocessing not only deals with these thing but also covers feature selection, data reduction, etc. Given a set of attributes, not every attribute is important for data analysis or prediction. Few attributes might be of no use and few attributes will be very vital for our analysis. For this purpose we do feature selection.
+
+
 \subsubsection{Missing Data Imputation}
-There are many attributes which have NA as one of the accepted value in their domain. These NA\textquotesingle s are not missing value but rather explain the absence of a particular feature in the house. The following attributes have NA in their domain:
+There are many attributes which have NA (Not Applicable) as one of the accepted value in their domain. These NA\textquotesingle s are not missing values but rather explain the absence of a particular feature in the house. The following attributes have NA in their domain:
 Alley, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, FireplaceQu, GarageType, GarageFinish, GarageQual, GarageCond, PoolQC, Fence, MiscFeature.
-The NA values for these attributes were replaced with \textbf{NC} while cleaning the data, to differentiate the actual missing values for other attributes with these 14 attributes.After replacing the NA values with NC for these attributes, we found the number of actual NA values or missing values:
+\\ The NA values for these attributes were replaced with \textbf{NC} while cleaning the data, to differentiate the actual missing values for other attributes with these 14 attributes.
+\\ \\ After replacing the NA values with NC for these attributes, we found the actual number of NA values or missing values.
 A total of \textbf{357} values are missing in the Training data.
 A total of \textbf{358} values are missing in the Test data.
-The percentage of missing values in the training data is \textbf{0.3018\%}
-The percentage of missing values in the test data is \textbf{0.3067\%}
-\\ \\The majority of values are missing for the attribute \textbf{LotFrontage}
-The percentage of missing values for LotFrontage in training data is \textbf{17.739\%}
-The percentage of missing values for LotFrontage in test data is \textbf{15.558\%}
-The mean of the values for attribute \textbf{LotFrontage} in training data is \textbf{70.05} and the median is \textbf{69.00}.
-The mean of the values for attribute \textbf{LotFrontage} in test data is \textbf{68.58} and the median is \textbf{67.00}.
-The missing values have been replaced with the mean of the existing values for LotFrontage, as there is not a huge difference between the mean and the median.
-\\ \\The attribute \textbf{GarageYrBlt} has the second highest number of missing values.
-The percentage of missing values for \textbf{GarageYrBlt} in training data is \textbf{5.547\%}
-The percentage of missing values for \textbf{GarageYrBlt} in test data is \textbf{5.346\%}
-The mean of the values for attribute \textbf{GarageYrBlt} in training data is \textbf{1979} and the median is \textbf{1980}.
-The mean of the values for attribute \textbf{GarageYrBlt} in test data is \textbf{1978 }and the median is \textbf{1979}.
-The missing values have been replaced with the mean of the existing values for GarageYrBlt, as there is not a huge difference between the mean and the median.
-Similarly for all other numerical attributes missing values was replaced by Mean or Median based on data and for categorical attributes the missing values were replaced by the mode of that particular attribute.
+The percentage of missing values in the training data is 0.3018\%.
+The percentage of missing values in the test data is 0.3067\%.
+\\ \\The majority of values are missing for the attribute LotFrontage.
+The percentage of missing values for LotFrontage in training data is 17.739\%.
+The percentage of missing values for LotFrontage in test data is 15.558\%.
+The mean of the values for attribute LotFrontage in training data is 70.05 and the median is 69.00.
+The mean of the values for attribute LotFrontage in test data is 68.58 and the median is 67.00.
+Thus, the missing values have been replaced with the mean of the existing values for LotFrontage, as there is not a huge difference between the mean and the median.
+\\ \\The attribute GarageYrBlt has the second highest number of missing values.
+The percentage of missing values for GarageYrBlt in training data is 5.547\%.
+The percentage of missing values for GarageYrBlt in test data is 5.346\%.
+The mean of the values for attribute GarageYrBlt in training data is 1979 and the median is 1980.
+The mean of the values for attribute GarageYrBlt in test data is 1978 and the median is 1979.
+Thus, the missing values have been replaced with the mean of the existing values for GarageYrBlt, as there is not a huge difference between the mean and the median.
+\\ \\ Similarly for all other numerical attributes, the missing values were replaced by either mean or median based on the data and for categorical attributes the missing values were replaced by the mode value of that particular attribute.
 %\begin{figure}[ht]\centering
 %\includegraphics[width=\linewidth]{results}
 %\caption{In-text Picture}
@@ -169,42 +160,80 @@ Similarly for all other numerical attributes missing values was replaced by Mean
 %Reference to Figure \ref{fig:results}.
 
 %------------------------------------------------
-\subsubsection{Feature Selection/Feature Selection}
-\textbf{Feature extraction} starts from an initial set of measured data and builds derived values (features) intended to be informative and non-redundant, facilitating the subsequent learning and generalization steps, and in some cases leading to better human interpretations. Feature extraction is related to dimensionality reduction [5].
-When the input data to an algorithm is too large to be processed and it is suspected to be redundant, then it can be transformed into a reduced set of features (also named a features vector). This process is called \textbf{feature selection} [5].
-\\ \\One of the methods for data reduction is \textbf{Correlation}. Correlation is a statistical technique that can show whether and how strongly pairs of variables are related. 
-\\ We are using \textbf{Pearsons Coeffiecient} and this can be done in \textbf{R} using \textbf{cor} function. Below is the graph that shows the correlation among all numerical attributes.
-\begin{figure}[h]
-\includegraphics[scale=0.32]{Correlation}
+\subsubsection{Outlier Analysis}
+Outlier is an observation that diverges from the overall pattern in the sample. In any data, outliers affect the training model and sometimes this can be more than expected. Hence, such outliers should be taken care of.
+\\The box plot for Sales Price is given below
+\begin{figure}[h]\centering
+\includegraphics[scale=0.5]{BoxPlotSales}
+\\ \caption{\\ Box Plot of Sale Price}
+\end{figure}
+As we can see, there are a few outliers for the Sales Price, having a value greater than 500,000.
+We can compare the boxplot of Sales Price with some of the highly correlated categorical variables and check the outliers with respect to these categories.
+\begin{figure}[h!]\centering
+\includegraphics[scale=0.4]{Boxplot1_Neighborhood}
+\\ \caption{\\ Box Plot of Neighborhood}
+\end{figure}
+
+\begin{figure}[h!]\centering
+\includegraphics[scale=0.4]{Boxplot2_Alley}
+\\ \caption{\\ Box Plot of Alley}
+\end{figure}
+
+\begin{figure}[h!]\centering
+\includegraphics[scale=0.4]{Boxplot3_LandContour}
+\\ \caption{\\ Box Plot of LandContour}
+\end{figure}
+
+\begin{figure}[h!]\centering
+\includegraphics[scale=0.4]{Boxplot4_Lotshape}
+\\ \caption{\\ Box Plot of LotShape}
+\end{figure}
+
+\subsubsection{Outlier Treatment}
+As outliers can affect the overall trend in the data, we will be removing these outliers from the training data. Here we have total 9 values of Sales Price which are greater than 500000, which is just 0.61\%. Hence, we can remove these rows from the data so that there would not be any value that greatly affects the predictions.
+
+\subsubsection{Feature Selection}
+\textbf{Feature Selection} starts from an initial set of measured data and builds derived values (features) intended to be informative and non-redundant, facilitating the subsequent learning and generalization steps, and in some cases leading to better human interpretations. Feature selection is related to dimensionality reduction.
+When the input data to an algorithm is too large to be processed and it is suspected to be redundant, then it can be transformed into a reduced set of features (also named a features vector). This process is called feature selection \cite{REF:5}.
+\\ \\One of the methods for dimensionality reduction is Correlation. Correlation is a statistical technique that can show how strongly a pair of variables are related.
+\\ We are using Pearson's Coefficient to measure correlation and this can be done in the \textbf{R} tool using \textbf{cor} function. Below is the graph that shows the correlation among all the numerical attributes.
+
+
+\begin{figure}[h]\centering
+\includegraphics[scale=0.40]{Correlation}
 \\ \caption{\\ Correlation Between Variables}
 \end{figure}
-As seen in the graph, the attributes OverallQual,GrLiveArea,FullBath, GarageCars are among few attributes which have greater correlation with SalePrice.
-But the Pearson's cofficient needs linear data and data should be a normal, and as data size is small just by plotting the graphs its not easy to predict if the data is normal and attributes have linear relationship or not, hence correlation isn't a feasible idea here.
-\\ \\ So the method we have used for feature extraction is using \textbf{Boruta Algorithm}. The algorithm is designed as a wrapper around a Random Forest classication algorithm. It iteratively removes the features which are proved by a statistical test to be less relevant than random probes. The \textbf{Boruta package} in \textbf{R} provides a convenient interface to the algorithm.
-\\ \\Below is the step wise working of \textbf{boruta algorithm}[6]:
+As it is depicted in the graph, features like OverallQual, GrLiveArea, FullBath, GarageCars are among the few features which have high correlation with the Sales Price.
+But the Pearson's coefficient needs the data to be normal and linearly related. In our case, the size of the data is small and just by plotting the graphs it is not easy to predict if the data is normal and features have linear relationship or not. Hence, correlation is not a suitable technique for feature selection for our data.
+\\ \\ The method that we have used for feature extraction is using \textbf{Boruta Package} in R tool. The algorithm is designed as a wrapper around a Random Forest classification algorithm. It iteratively removes the features which are proved by a statistical test to be less relevant than random probes. The \textbf{Boruta package} in \textbf{R} provides a convenient interface to the algorithm \cite{REF:7}.
+\\ \\Below is the step wise working of \textbf{algorithm} \cite{REF:6}:
 \begin{enumerate}[noitemsep]
-\item Firstly, it adds randomness to the given data set by creating shuffled copies of all features (which are called shadow features).
+\item Firstly, it adds randomness to the given data set by creating shuffled copies of all the features (which are called shadow features).
 \item Then, it trains a random forest classifier on the extended data set and applies a feature importance measure (the default is Mean Decrease Accuracy) to evaluate the importance of each feature where higher means more important.
 \item At every iteration, it checks whether a real feature has a higher importance than the best of its shadow features (i.e. whether the feature has a higher Z score than the maximum Z score of its shadow features) and constantly removes features which are deemed highly unimportant.
 \item Finally, the algorithm stops either when all features gets confirmed or rejected or it reaches a specified limit of random forest runs.
 \end{enumerate}
 The Boruta package was used after the missing values were replaced, as Boruta does not work if we have missing values in data.
-After running the Boruta function and plotting the graph we get a list of \textbf{confirmed}, \textbf{tentative} and \textbf{rejected} attribute. Below is the graph of these variables
+After running the Boruta function and plotting the graph we get a list of \textbf{confirmed}, \textbf{tentative} and \textbf{rejected} features.
 \begin{figure}[h]
-\includegraphics[scale=0.17]{Boruta}
+\includegraphics[scale=0.21]{Boruta}
 \\ \caption{\\Boruta Plot}
 \end{figure}
-\\ The \textbf{green} box plots are for the attributes that have been confirmed, the \textbf{yellow} for tentative and \textbf{red} for rejected attributes.
+\\ The \textbf{green} box plots are for the features that have been confirmed, \textbf{yellow} for tentative and \textbf{red} for rejected features.
+\subsubsection{Feature Engineering}
+After cleaning the data and feature selection based on Boruta we have converted all the categorical attributes into dummy or indicator variables. These dummy variables are created based on the domain of each feature and store either 0 or 1 values, 1 if the value is present for that column or 0 if it is not present. For example, if a categorical feature Alpha has domain \{A, B, C\}, then Alpha would be replaced by three columns named A, B, C. For a particular row, if the value of Alpha is B, then A would be 0, B would be 1 and C would be 0.
+\\ These dummy variables tend to have values with more realistic interpretations.
+
 
 \section{Algorithm and Methodology}
-The project mainly deals with using various Regression techniques like \textbf{"Linear"},\textbf{"Random Forest Regression"},\textbf{"Gradient Boosting"},\textbf{"Extreme Gradient Boosting"} for predictive analysis.
+The project mainly deals with using various Regression techniques like \textbf{Linear Regression}, \textbf{Random Forest}, \textbf{Gradient Boosting}, \textbf{Extreme Gradient Boosting} for predictive analysis.
 \\ \textbf{What is Regression Analysis?}
-\\Regression analysis is a form of predictive modelling technique which investigates the relationship between a dependent (target) and independent variable (s) (predictor). This technique is used for forecasting, time series modelling and finding the causal effect relationship between the variables [2]. 
+\\ Regression analysis is a form of predictive modeling technique which investigates the relationship between a dependent (target) and independent variable(s) (predictor). This technique is used for forecasting, time series modeling and finding the causal effect relationship between the variables \cite{REF:2}. 
 
 \subsection{Regression Techniques}
 \begin{enumerate}
 \item \textbf{Linear Regression}
-\newline A linear regression establishes a relation between a dependent variable (Y) and one or more independent variable(X) using a best fit straight line,(also known as "Regression Line").
+\newline A linear regression establishes a relation between a dependent variable (Y) and one or more independent variable(X) using a best fit straight line (also known as "Regression Line").
 \\ It is represented by below equation 
 \begin{subequations}
 \begin{align}
@@ -217,18 +246,41 @@ y & = a+bx
 %\label{fig:view}
 %\end{figure*}
 
-\begin{figure}[h]
-\includegraphics[scale=0.3]{Linearregression}
+\begin{figure}[h]\centering
+\includegraphics[scale=0.4]{Linearregression}
 \\ \caption{\\ Linear Regression Line}
 \end{figure}
 \end{subequations}
 \item \textbf{Random Forest Regression}
-\\Random forests or random decision forests are an ensemble learning method for classification, regression and other tasks, that operate by constructing a multitude of decision trees at training time and outputting the class that is mean prediction (regression) of the individual trees [3].
+\\Random forests or random decision forests are an ensemble learning method for classification, regression and other tasks, that operate by constructing a multitude of decision trees at training time and outputting the class that is mean prediction (regression) of the individual trees \cite{REF:3}.
 \item \textbf{Gradient Boosting}
-\\Gradient boosting is a machine learning technique for regression and classification problems, which produces a prediction model in the form of an ensemble of weak prediction models, typically decision trees. It builds the model in a stage-wise fashion like other boosting methods do, and it generalizes them by allowing optimization of an arbitrary differentiable loss function [4].
-\item \textbf{LASSO Regression}:
-lasso (least absolute shrinkage and selection operator) (also Lasso or LASSO) is a regression analysis method that performs both variable selection and regularization in order to enhance the prediction accuracy and interpretability of the statistical model it produces
+\\Gradient boosting is a machine learning technique for regression and classification problems, which produces a prediction model in the form of an ensemble of weak prediction models, typically decision trees. It builds the model in a stage-wise fashion like other boosting methods do, and it generalizes them by allowing optimization of an arbitrary differentiable loss function \cite{REF:4}.
+\item \textbf{Lasso Regression}:
+Lasso (least absolute shrinkage and selection operator) is a regression analysis method that performs both variable selection and regularization in order to enhance the prediction accuracy and interpretability of the statistical model it produces.
 \end{enumerate}
+\subsection{Training of Regression Models}
+The method employed to train a prediction model is as follows:
+\begin{enumerate}[noitemsep]
+\item The given training data is partitioned into two parts. 80\% of the given training data was considered as training data for initial model training and remaining 20\% was considered as test data, for the purpose of calculating the error rates.
+\item We use this 80\% data on various regression models.
+\item The model was the applied on the 20\% of the data used as test data, and the Sales Price was predicted.
+\item The RMSE was calculated using the actual Sales Price and predicted Sales Price.
+\item This process was repeated on all regression models.
+\end{enumerate}
+A 10-fold cross-validation was also applied to decide the optimal number of trees. The figure shows the number of trees used and the average error. We have found that as the number of trees increases, the average error decreases until it converges and then starts increasing again. Other studies have also concluded the same results, that there is a threshold value beyond which there is no advantage in increasing the number of trees.
+\begin{figure}[h]\centering
+\includegraphics[scale=0.4]{RandomForest}
+\\ \caption{\\ Random Forest 10-fold cross-validation}
+\end{figure}
+\\ \\ Here are some of the parameters that we have optimized for our Random Forest model on the training data:
+\\ Number of predictors sampled for splitting at each node: 65
+\\ Number of trees: 500
+\\ \\ Similarly, for the Gradient Boosting model we have found the optimal values for some parameters on the training data:
+\\ Number of trees to fit: 10000
+\\ Maximum depth of variable interaction: 15
+\\ Learning Rate or step-size reduction: 0.002
+\\ Minimum number of observations in tree terminal nodes: 15
+
 %\begin{table}[hbt]
 %\caption{Table of Grades}
 %\centering
@@ -245,57 +297,53 @@ lasso (least absolute shrinkage and selection operator) (also Lasso or LASSO) is
 %\label{tab:label}
 %\end{table}
 
-\subsubsection{Subsubsection}
-
-\lipsum[12] % Dummy text
-
-\begin{description}
-\item[Word] Definition
-\item[Concept] Explanation
-\item[Idea] Text
-\end{description}
-
-\subsubsection{Subsubsection}
-
-\lipsum[13] % Dummy text
-
-\begin{itemize}[noitemsep] % [noitemsep] removes whitespace between the items for a compact look
-\item First item in a list
-\item Second item in a list
-\item Third item in a list
-\end{itemize}
-
-\subsubsection{Subsubsection}
-
-\lipsum[14] % Dummy text
-
-\subsection{Subsection}
-
-\lipsum[15-23] % Dummy text
-
 \section{Experiments and Results}
+All the experiments were performed on a machine with two Intel Xeon E5-2650 v2 8-core processors with 32GB of memory, available at Indiana University, Bloomington. We have used R version 3.3.0, R Studio version 0.99.902 for the coding involved in this project.
+
+We have compared the regression models used for predicting the Sales Price of the houses based on the root mean square error (RMSE). Root Mean Square Error is a measure of the quality of an estimator and is the difference between the predicted and observed values.
+\\ The formula used for calculating RMSE = $\sqrt{\frac{(predicted-observed)^2}{n}}$
+\\ \\After training the regression models, the following values were calculated for RMSE:
+\begin{enumerate}[noitemsep] 
+\item Linear Regression: 33262.7
+\item Simple Trees: 47717.98
+\item Random Forest: 28322.66
+\item Gradient Boosting: 25877.12
+\item Lasso: 27652.61
+\item Extreme Gradient Boosting: 30381.65
+\end{enumerate}
+Also, \textbf{Ensemble Learning} was used to predict the Sales Price of the houses. Ensemble learning creates a predictor or model by combining multiple predictors (from Linear Regression, Random Forest, etc.) to create a stronger overall prediction. An ensemble with two techniques that are more diverse might give much better results than the one with similar techniques involved.
+The prediction models for Gradient Boosting and Lasso regression were combined to create the ensemble model here.
+The RMSE value for this Ensemble model was calculated to be 21887.75.
+
+After calculating the RMSE values we found out that the ensemble model has the least RMSE among all the predictors used.
+
+The experiment was repeated on the entire training data to train the models again and the Ensemble model was used to predict the final House Prices, as it has the least RMSE out of all the prediction models.
+
+
 
 \section{Summary and Conclusions}
+The main challenge faced in predicting the Sales Price of the houses was to train the prediction models and find the optimal parameters for each model.
+
+The large number of observations and the attributes present in the training dataset have helped us to analyze and predict the Sales Price of houses correctly, to an extent. We have gained insight about various phases of the Data Mining processes like data preparation, transformation and its validation. It has been found out that a lot of the variation in the Sales Price can be explained by observing the features like GrLivArea, GarageArea, OverallQual, and TotalBsmtSF.
+
+For future work, we would like to train the Extreme Gradient Boosting model more efficiently and also implement other techniques like Ridge Regression, Neural Network.
 %------------------------------------------------
 \phantomsection
 \section*{Acknowledgments} % The \section*{} command stops section numbering
 
 \addcontentsline{toc}{section}{Acknowledgments} % Adds this section to the table of contents
+We have put in considerable efforts to reach this stage of the project but it would not have been possible without the continuous guidance and support of many other individuals. We would like to extend our sincere thanks to all of them.
+\\ \\ We are highly indebted to our Professor \href{https://www.soic.indiana.edu/all-people/profile.html?profile_id=187}{Mehmet Dalkilic}, for his supervision as well as for providing the necessary resources required for the completion of this project report.
+\\ \\ We would also like to thank our Associate Instructor Hasan Kurban for his help and constant support throughout our coursework.
 
-So long and thanks for all the fish \cite{Figueredo:2009dg}.
 
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST
 %----------------------------------------------------------------------------------------
 \phantomsection
-[1]http://www.economicshelp.org/blog/glossary/definition-of-the-housing-market/
-\newline [2]https://www.analyticsvidhya.com/blog/2015/08/comprehensive-guide-regression
-\newline [3]https://en.wikipedia.org/wiki/Random$\_$Forest
-\newline [4]https://en.wikipedia.org/wiki/Gradient$\_$boosting
-\newline [5]https://en.wikipedia.org/wiki/Feature$\_$extraction
-\newline [6]https://www.analyticsvidhya.com/blog/2016/03/select-important-variables-boruta-package/
+
 \bibliographystyle{unsrt}
-\bibliography{sample}
+\bibliography{report}
 
 %----------------------------------------------------------------------------------------
 
