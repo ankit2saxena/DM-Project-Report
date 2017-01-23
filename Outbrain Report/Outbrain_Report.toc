@@ -1,0 +1,33 @@
+\select@language {english}
+\contentsline {section}{Introduction}{1}{Doc-Start}
+\contentsline {paragraph}{}{1}{paragraph*.1}
+\contentsline {paragraph}{}{1}{paragraph*.2}
+\contentsline {section}{\numberline {1}Background}{1}{section.1}
+\contentsline {paragraph}{}{1}{paragraph*.3}
+\contentsline {subsection}{\numberline {1.1}Data}{1}{subsection.1.1}
+\contentsline {subsubsection}{\numberline {1.1.1}Data Fields}{2}{subsubsection.1.1.1}
+\contentsline {paragraph}{}{2}{paragraph*.4}
+\contentsline {paragraph}{clicks\textunderscore train.csv}{2}{paragraph*.5}
+\contentsline {paragraph}{clicks\textunderscore test.csv}{2}{paragraph*.7}
+\contentsline {paragraph}{events.csv}{2}{paragraph*.9}
+\contentsline {subsubsection}{\numberline {1.1.2}Data Preprocessing}{2}{subsubsection.1.1.2}
+\contentsline {paragraph}{}{2}{paragraph*.11}
+\contentsline {paragraph}{}{2}{paragraph*.12}
+\contentsline {section}{\numberline {2}Algorithm and Methodology}{2}{section.2}
+\contentsline {paragraph}{}{2}{paragraph*.13}
+\contentsline {subsection}{\numberline {2.1}Training of the model}{2}{subsection.2.1}
+\contentsline {paragraph}{}{2}{paragraph*.14}
+\contentsline {section}{\numberline {3}Experiment and Result}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}Hardware used}{3}{subsection.3.1}
+\contentsline {paragraph}{}{3}{paragraph*.15}
+\contentsline {subsection}{\numberline {3.2}Experiment}{3}{subsection.3.2}
+\contentsline {paragraph}{}{3}{paragraph*.16}
+\contentsline {paragraph}{}{3}{paragraph*.17}
+\contentsline {paragraph}{}{3}{paragraph*.18}
+\contentsline {paragraph}{}{3}{paragraph*.19}
+\contentsline {subsection}{\numberline {3.3}Results}{3}{subsection.3.3}
+\contentsline {paragraph}{}{3}{paragraph*.20}
+\contentsline {section}{\numberline {4}Summary and Conclusions}{3}{section.4}
+\contentsline {subsection}{\numberline {4.1}Future Work}{3}{subsection.4.1}
+\contentsline {section}{Acknowledgments}{3}{section*.21}
+\contentsfinish 
